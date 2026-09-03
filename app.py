@@ -14,7 +14,6 @@ conn = sqlite3.connect("sistema_financiero.db", check_same_thread=False)
 cursor = conn.cursor()
 
 
-# Crear tablas
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS productos (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,6 +46,7 @@ cursor.execute('''
     )
 ''')
 conn.commit()
+
 
 
 # Menú principal en la barra lateral
