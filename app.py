@@ -13,6 +13,7 @@ st.set_page_config(page_title="Sistema Financiero y Ventas", layout="wide")
 conn = sqlite3.connect("sistema_financiero.db", check_same_thread=False)
 cursor = conn.cursor()
 
+
 # Crear tablas
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS productos (
@@ -27,6 +28,12 @@ cursor.execute('''
     )
 ''')
 
+# Añadir la columna 'imagen' si la tabla ya existía previamente sin ella
+try:
+    cursor.execute("ALTER TABLE productos ADD COLUMN imagen BLOB")
+except sqlite3.OperationalError:
+    pass # La columna ya existe, se ignora el error
+
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS ventas (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,6 +47,7 @@ cursor.execute('''
     )
 ''')
 conn.commit()
+
 
 # Menú principal en la barra lateral
 st.sidebar.title("Navegación")
